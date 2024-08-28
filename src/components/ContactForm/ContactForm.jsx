@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from "yup";
 import { nanoid } from 'nanoid';
 
-const phoneRegExp = /^[1-9]{3}-[0-9]{2}-[0-9]{2}$/
+const phoneRegExp = /^[0-9]{3}-[0-9]{2}-[0-9]{2}$/
 
 const validationSchema = Yup.object({
         name: Yup.string()
@@ -29,6 +29,7 @@ const ContactForm = ({onAddContact}) => {
         resetForm();
     }
     
+  
     return (
         <Formik
         initialValues={{ name: '', number:'', } }validationSchema = {validationSchema}
