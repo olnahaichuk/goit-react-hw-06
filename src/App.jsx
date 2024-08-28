@@ -3,9 +3,8 @@ import ContactForm from './components/ContactForm/ContactForm';
 import ContactList from './components/ContactList/ContactList';
 import SearchBox from './components/SearchBox/SearchBox';
 import './App.css'
-import {  setFilterValue } from './redux/filter/filterReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact, deleteContact, setContact } from './redux/contacts/contactsReducer';
+import {  setContact } from './redux/contacts/contactsReducer';
 
 
 const dataUsers = [
@@ -32,15 +31,8 @@ function App() {
   
   const selectContacts = useSelector(state => state.contacts.contacts);
 
-  const selectNameFilter = useSelector((state) => state.filters.filterValue);
-  const handleFilterChange = (filterValue) => {
-    const action = setFilterValue(filterValue);
-    dispatch(action);
-  };
 
-  const filterContact = selectContacts.filter(contact =>
-    contact.name.toLowerCase().includes(selectNameFilter.toLowerCase())
-  );
+
 
  useEffect(() => {
    const savedContacts = localStorage.getItem('contacts');
@@ -57,24 +49,12 @@ function App() {
     localStorage.setItem('contacts', JSON.stringify(selectContacts))
   },[selectContacts]);
   
-    
-
-  const onDeleteContact = (contactId) => {
-   
-    dispatch(deleteContact(contactId));
-  }
-  const onAddContact = (newContact) => {
-    
-    dispatch(addContact(newContact));
-
-  }
-  
   return (
     <div className='wrapper'>
      <h1>Phonebook</h1>
-    <ContactForm onAddContact ={onAddContact} />
-    <SearchBox filter = {selectNameFilter} onFilterChange = {handleFilterChange} />
-      <ContactList  contacts={filterContact} onDeleteContact ={onDeleteContact} />
+    <ContactForm />
+    <SearchBox />
+      <ContactList  />
 </div>
   )
 }

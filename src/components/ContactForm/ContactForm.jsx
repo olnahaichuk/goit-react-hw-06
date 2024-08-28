@@ -2,6 +2,8 @@ import css from './ContactForm.module.css'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from "yup";
 import { nanoid } from 'nanoid';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../../redux/contacts/contactsReducer';
 
 const phoneRegExp = /^[0-9]{3}-[0-9]{2}-[0-9]{2}$/
 
@@ -18,14 +20,16 @@ const validationSchema = Yup.object({
             .max(10, "Number must be 10 characters")
 })
 
-const ContactForm = ({onAddContact}) => {
+const ContactForm = () => {
+    const dispatch = useDispatch();
+
     const handleSubmit = (values , {resetForm}) => {
         const newContact = {
             id: nanoid(),
             name: values.name,
             number: values.number,
         };
-        onAddContact(newContact);
+        dispatch(addContact(newContact));
         resetForm();
     }
     
